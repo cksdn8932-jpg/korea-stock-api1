@@ -5,7 +5,9 @@ FinanceDataReader 사용 (계좌 불필요)
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import FinanceDataReader as fdr
+def get_fdr():
+    import FinanceDataReader as fdr
+    return fdr
 from datetime import datetime, timedelta
 import pandas as pd
 
@@ -36,7 +38,8 @@ def search_stock():
             }), 400
         
         # 전체 종목 리스트 가져오기
-        df_krx = fdr.StockListing('KRX')
+       fdr = get_fdr()
+df_krx = fdr.StockListing('KRX')
         
         # 종목명으로 검색 (부분 일치)
         result = df_krx[df_krx['Name'].str.contains(stock_name, na=False)]
@@ -81,7 +84,8 @@ def get_stock_data():
         start_date = end_date - timedelta(days=days + 100)  # 여유있게
         
         # 주가 데이터 가져오기
-        df = fdr.DataReader(
+       fdr = get_fdr()
+df = fdr.DataReader(
             stock_code, 
             start_date.strftime('%Y-%m-%d'),
             end_date.strftime('%Y-%m-%d')
