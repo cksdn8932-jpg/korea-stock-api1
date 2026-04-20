@@ -5,7 +5,7 @@
  */
 
 // ⚙️ API 서버 URL (배포 후 업데이트 필요)
-var API_BASE_URL = "https://YOUR-APP-NAME.onrender.com";
+var API_BASE_URL = "https://korea-stock-api1.onrender.com";
 
 function doGet() {
   return HtmlService.createHtmlOutputFromFile('Index')
