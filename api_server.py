@@ -38,8 +38,8 @@ def search_stock():
             }), 400
         
         # 전체 종목 리스트 가져오기
-       fdr = get_fdr()
-df_krx = fdr.StockListing('KRX')
+        fdr = get_fdr()
+        df_krx = fdr.StockListing('KRX')
         
         # 종목명으로 검색 (부분 일치)
         result = df_krx[df_krx['Name'].str.contains(stock_name, na=False)]
