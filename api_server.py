@@ -79,14 +79,16 @@ def get_stock_data():
                 "message": "종목코드를 입력해주세요"
             }), 400
         
+        # ✅ 여기 위치 중요
+        fdr = get_fdr()
+        
         # 날짜 계산
         end_date = datetime.now()
-        start_date = end_date - timedelta(days=days + 100)  # 여유있게
+        start_date = end_date - timedelta(days=days + 100)
         
         # 주가 데이터 가져오기
-       fdr = get_fdr()
-df = fdr.DataReader(
-            stock_code, 
+        df = fdr.DataReader(
+            stock_code,
             start_date.strftime('%Y-%m-%d'),
             end_date.strftime('%Y-%m-%d')
         )
