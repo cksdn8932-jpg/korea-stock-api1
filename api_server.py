@@ -27,43 +27,42 @@ def home():
 
 @app.route('/api/search', methods=['GET'])
 def search_stock():
-    """종목명으로 종목코드 검색"""
     try:
+        fdr = get_fdr()
+
         stock_name = request.args.get('name', '').strip()
-        
+
         if not stock_name:
             return jsonify({
                 "success": False,
                 "message": "종목명을 입력해주세요"
             }), 400
-        
-        # 전체 종목 리스트 가져오기
-        fdr = get_fdr()
+
         df_krx = fdr.StockListing('KRX')
-        
-        # 종목명으로 검색 (부분 일치)
+
         result = df_krx[df_krx['Name'].str.contains(stock_name, na=False)]
-        
+
         if len(result) == 0:
             return jsonify({
                 "success": False,
                 "message": f"'{stock_name}' 종목을 찾을 수 없습니다"
             }), 404
-        
-        # 첫 번째 결과 반환
+
         stock = result.iloc[0]
-        
+
         return jsonify({
             "success": True,
             "code": stock['Code'],
             "name": stock['Name'],
             "market": stock['Market']
         })
-        
+
     except Exception as e:
+        import traceback
         return jsonify({
             "success": False,
-            "message": f"오류 발생: {str(e)}"
+            "message": str(e),
+            "trace": traceback.format_exc()   # 🔥 핵심 (디버깅용)
         }), 500
 
 @app.route('/api/stock', methods=['GET'])
