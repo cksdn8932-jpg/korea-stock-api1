@@ -3,3 +3,4 @@ flask-cors==4.0.0
 finance-datareader==0.9.50
 pandas==1.5.3
 numpy==1.23.5
+gunicorn==21.2.0
